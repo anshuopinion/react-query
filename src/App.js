@@ -3,6 +3,7 @@ import React from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Home from "./Home/Home";
+import { ReactQueryDevtools } from "react-query/devtools";
 const App = () => {
   const queryClient = new QueryClient();
   return (
@@ -15,6 +16,7 @@ const App = () => {
             </Route>
           </Switch>
         </Router>
+        <ReactQueryDevtools />
       </QueryClientProvider>
     </ChakraProvider>
   );
