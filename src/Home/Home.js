@@ -12,7 +12,7 @@ import {
   Text,
   useToast,
 } from "@chakra-ui/react";
-import { useHistory, useParams } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 
 const fetchPosts = async (id) => {
   try {
@@ -77,21 +77,22 @@ const Home = () => {
             </Button>
           </Flex>
           {data.data.map((post) => (
-            <Stack
-              p="4"
-              boxShadow="md"
-              borderRadius="xl"
-              border="1px solid #ccc"
-              key={post.id}
-              mb="4"
-            >
-              <Flex justify="space-between">
-                <Text>UserId: {post.user_id}</Text>
-                <Text>PostId: {post.id}</Text>
-              </Flex>
-              <Heading fontSize="2xl">{post.title}</Heading>
-              <Text>{post.body}</Text>
-            </Stack>
+            <Link key={post.id} to={`/post/${post.id}`}>
+              <Stack
+                p="4"
+                boxShadow="md"
+                borderRadius="xl"
+                border="1px solid #ccc"
+                mb="4"
+              >
+                <Flex justify="space-between">
+                  <Text>UserId: {post.user_id}</Text>
+                  <Text>PostId: {post.id}</Text>
+                </Flex>
+                <Heading fontSize="2xl">{post.title}</Heading>
+                <Text>{post.body}</Text>
+              </Stack>
+            </Link>
           ))}
         </>
       )}

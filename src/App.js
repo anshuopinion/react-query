@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Home from "./Home/Home";
 import { ReactQueryDevtools } from "react-query/devtools";
+import Post from "./Post/Post";
 const App = () => {
   const queryClient = new QueryClient();
   return (
@@ -11,6 +12,9 @@ const App = () => {
       <QueryClientProvider client={queryClient}>
         <Router>
           <Switch>
+            <Route path="/post/:id" exact>
+              <Post />
+            </Route>
             <Route path="/:id" exact>
               <Home />
             </Route>
