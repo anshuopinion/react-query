@@ -2,7 +2,6 @@ import { useQuery } from "react-query";
 import axios from "axios";
 import React from "react";
 import {
-  Button,
   Container,
   Flex,
   Grid,
@@ -12,7 +11,7 @@ import {
   Text,
   useToast,
 } from "@chakra-ui/react";
-import { useHistory, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const fetchPost = async (id) => {
   try {
@@ -27,12 +26,9 @@ const fetchPost = async (id) => {
 };
 const Post = () => {
   const { id } = useParams();
-  const history = useHistory();
-  console.log(id);
 
   const toast = useToast();
   const { data, isLoading } = useQuery(["post", id], () => fetchPost(id), {
-    keepPreviousData: true,
     onError: (error) => {
       toast({ status: "error", title: error.message });
     },

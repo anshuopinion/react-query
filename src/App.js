@@ -12,7 +12,7 @@ const App = () => {
       <QueryClientProvider client={queryClient}>
         <Router>
           <Switch>
-            <Route path="/post/:id" exact>
+            <Route path="/post/:id">
               <Post />
             </Route>
             <Route path="/:id" exact>
