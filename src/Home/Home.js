@@ -2,6 +2,7 @@ import { useQuery } from "react-query";
 import axios from "axios";
 import React from "react";
 import {
+  Button,
   Container,
   Flex,
   Grid,
@@ -11,10 +12,13 @@ import {
   Text,
   useToast,
 } from "@chakra-ui/react";
+import { useHistory, useParams } from "react-router-dom";
 
-const fetchPosts = async () => {
+const fetchPosts = async (id) => {
   try {
-    const { data } = await axios.get("https://gorest.co.in/public/v1/posts");
+    const { data } = await axios.get(
+      `https://gorest.co.in/public/v1/posts?page=${id}`
+    );
 
     return data;
   } catch (error) {
@@ -22,12 +26,23 @@ const fetchPosts = async () => {
   }
 };
 const Home = () => {
+  const { id } = useParams();
+  const history = useHistory();
+  console.log(id);
+
+  const pageId = parseInt(id);
+
   const toast = useToast();
-  const { data, isLoading } = useQuery("posts", fetchPosts, {
-    onError: (error) => {
-      toast({ status: "error", title: error.message });
-    },
-  });
+  const { data, isLoading } = useQuery(
+    ["posts", pageId],
+    () => fetchPosts(pageId),
+    {
+      keepPreviousData: true,
+      onError: (error) => {
+        toast({ status: "error", title: error.message });
+      },
+    }
+  );
 
   return (
     <Container maxW="1300px" mt="4">
@@ -37,6 +52,30 @@ const Home = () => {
         </Grid>
       ) : (
         <>
+          <Flex justify="space-between" mb="4">
+            <Button
+              colorScheme="red"
+              onClick={() => {
+                if (data.meta.pagination.links.previous !== null) {
+                  history.push(`/${pageId - 1}`);
+                }
+              }}
+              disabled={!data.meta.pagination.links.previous !== null}
+            >
+              Prev
+            </Button>
+
+            <Text>Current Page : {pageId}</Text>
+            <Button
+              colorScheme="green"
+              onClick={() => {
+                history.push(`/${pageId + 1}`);
+              }}
+            >
+              {" "}
+              Next
+            </Button>
+          </Flex>
           {data.data.map((post) => (
             <Stack
               p="4"

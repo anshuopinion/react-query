@@ -11,7 +11,7 @@ const App = () => {
       <QueryClientProvider client={queryClient}>
         <Router>
           <Switch>
-            <Route path="/" exact>
+            <Route path="/:id" exact>
               <Home />
             </Route>
           </Switch>
