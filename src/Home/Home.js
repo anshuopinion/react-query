@@ -13,11 +13,12 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { Link, useHistory, useParams } from "react-router-dom";
+import AddNewPost from "./components/AddNewPost";
 
 const fetchPosts = async (id) => {
   try {
     const { data } = await axios.get(
-      `https://gorest.co.in/public/v1/posts?page=${id}`
+      `https://gorest.co.in/public/v1/users/17/posts?page=${id}`
     );
 
     return data;
@@ -52,6 +53,7 @@ const Home = () => {
         </Grid>
       ) : (
         <>
+          <AddNewPost />
           <Flex justify="space-between" mb="4">
             <Button
               colorScheme="red"
