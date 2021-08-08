@@ -12,18 +12,8 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
+import { fetchPost } from "../api";
 
-const fetchPost = async (id) => {
-  try {
-    const { data } = await axios.get(
-      `https://gorest.co.in/public/v1/posts/${id}`
-    );
-
-    return data;
-  } catch (error) {
-    throw Error("Unable to fetch Post");
-  }
-};
 const Post = () => {
   const { id } = useParams();
 

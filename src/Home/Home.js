@@ -14,18 +14,8 @@ import {
 } from "@chakra-ui/react";
 import { Link, useHistory, useParams } from "react-router-dom";
 import AddNewPost from "./components/AddNewPost";
+import { fetchPosts } from "../api";
 
-const fetchPosts = async (id) => {
-  try {
-    const { data } = await axios.get(
-      `https://gorest.co.in/public/v1/users/17/posts?page=${id}`
-    );
-
-    return data;
-  } catch (error) {
-    throw Error("Unable to fetch Posts");
-  }
-};
 const Home = () => {
   const { id } = useParams();
   const history = useHistory();

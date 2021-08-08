@@ -4,27 +4,7 @@ import { Form, Formik } from "formik";
 import { InputControl, SubmitButton, TextareaControl } from "formik-chakra-ui";
 import React from "react";
 import { useMutation } from "react-query";
-
-const addNewPost = async ({ title, body }) => {
-  try {
-    const { data } = await axios.post(
-      `https://gorest.co.in/public/v1/users/17/posts`,
-      {
-        title,
-        body,
-      },
-      {
-        headers: {
-          Authorization:
-            "Bearer 007799281949d89788d14812e4014006d629ed8ccd4d8941977827f383d4643a",
-        },
-      }
-    );
-    return data;
-  } catch (error) {
-    throw Error(error.response.statusText);
-  }
-};
+import { addNewPost } from "../../api";
 
 const AddNewPost = () => {
   const toast = useToast();
