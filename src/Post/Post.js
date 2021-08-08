@@ -13,16 +13,21 @@ import {
 } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import { fetchPost } from "../api";
+import AddNewPost from "../Home/components/AddNewPost";
 
 const Post = () => {
   const { id } = useParams();
 
   const toast = useToast();
-  const { data, isLoading } = useQuery(["post", id], () => fetchPost(id), {
-    onError: (error) => {
-      toast({ status: "error", title: error.message });
-    },
-  });
+  const { data, isLoading } = useQuery(
+    ["post", parseInt(id)],
+    () => fetchPost(id),
+    {
+      onError: (error) => {
+        toast({ status: "error", title: error.message });
+      },
+    }
+  );
 
   return (
     <Container maxW="1300px" mt="4">
@@ -32,6 +37,7 @@ const Post = () => {
         </Grid>
       ) : (
         <>
+          <AddNewPost isUpdate={true} id={data.data.id} />
           <Stack
             p="4"
             boxShadow="md"
