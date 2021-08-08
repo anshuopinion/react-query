@@ -49,6 +49,23 @@ export const updatePost = async ({ title, body, id }) => {
     throw Error(error.response.statusText);
   }
 };
+export const deletePost = async ({ id }) => {
+  try {
+    const { data } = await api.delete(
+      `posts/${id}`,
+
+      {
+        headers: {
+          Authorization:
+            "Bearer 007799281949d89788d14812e4014006d629ed8ccd4d8941977827f383d4643a",
+        },
+      }
+    );
+    return data;
+  } catch (error) {
+    throw Error(error.response.statusText);
+  }
+};
 export const fetchPosts = async (id) => {
   try {
     const { data } = await api.get(`users/1442/posts?page=${id}`);

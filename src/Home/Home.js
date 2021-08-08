@@ -1,4 +1,4 @@
-import { useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import axios from "axios";
 import React from "react";
 import {
@@ -14,9 +14,10 @@ import {
 } from "@chakra-ui/react";
 import { Link, useHistory, useParams } from "react-router-dom";
 import AddNewPost from "./components/AddNewPost";
-import { fetchPosts } from "../api";
+import { deletePost, fetchPosts } from "../api";
 
 const Home = () => {
+  const cache = useQueryClient();
   const { id } = useParams();
   const history = useHistory();
   console.log(id);
@@ -31,6 +32,18 @@ const Home = () => {
       keepPreviousData: true,
       onError: (error) => {
         toast({ status: "error", title: error.message });
+      },
+    }
+  );
+  const { isLoading: isMutating, mutateAsync } = useMutation(
+    "deletePost",
+    deletePost,
+    {
+      onError: (error) => {
+        toast({ status: "error", title: error.message });
+      },
+      onSuccess: () => {
+        cache.invalidateQueries("posts");
       },
     }
   );
@@ -69,22 +82,36 @@ const Home = () => {
             </Button>
           </Flex>
           {data.data.map((post) => (
-            <Link key={post.id} to={`/post/${post.id}`}>
-              <Stack
-                p="4"
-                boxShadow="md"
-                borderRadius="xl"
-                border="1px solid #ccc"
-                mb="4"
-              >
-                <Flex justify="space-between">
-                  <Text>UserId: {post.user_id}</Text>
-                  <Text>PostId: {post.id}</Text>
-                </Flex>
-                <Heading fontSize="2xl">{post.title}</Heading>
-                <Text>{post.body}</Text>
-              </Stack>
-            </Link>
+            <Stack
+              key={post.id}
+              p="4"
+              boxShadow="md"
+              borderRadius="xl"
+              border="1px solid #ccc"
+              mb="4"
+            >
+              <Flex justify="flex-end">
+                <Button
+                  size="sm"
+                  isLoading={isMutating}
+                  onClick={async () => {
+                    await mutateAsync({ id: post.id });
+                  }}
+                >
+                  Delete
+                </Button>
+              </Flex>
+              <Link to={`/post/${post.id}`}>
+                <Stack>
+                  <Flex justify="space-between">
+                    <Text>UserId: {post.user_id}</Text>
+                    <Text>PostId: {post.id}</Text>
+                  </Flex>
+                  <Heading fontSize="2xl">{post.title}</Heading>
+                  <Text>{post.body}</Text>
+                </Stack>
+              </Link>
+            </Stack>
           ))}
         </>
       )}
