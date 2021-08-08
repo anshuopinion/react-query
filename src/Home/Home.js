@@ -18,7 +18,7 @@ import AddNewPost from "./components/AddNewPost";
 const fetchPosts = async (id) => {
   try {
     const { data } = await axios.get(
-      `https://gorest.co.in/public/v1/users/17/posts?page=${id}`
+      `https://gorest.co.in/public/v1/users/1442/posts?page=${id}`
     );
 
     return data;
