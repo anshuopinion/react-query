@@ -1,4 +1,4 @@
-# React Query Compelete Course - @doSomeCoding
+# React Query Complete Course - @doSomeCoding
 Topic Covered -
 - React Query Compelete Installation
 - useQuery Hook
