@@ -6,7 +6,14 @@ import Home from "./Home/Home";
 import { ReactQueryDevtools } from "react-query/devtools";
 import Post from "./Post/Post";
 const App = () => {
-  const queryClient = new QueryClient();
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+        refetchInterval: 1,
+      },
+    },
+  });
   return (
     <ChakraProvider>
       <QueryClientProvider client={queryClient}>
