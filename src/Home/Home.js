@@ -14,7 +14,7 @@ import {
 } from "@chakra-ui/react";
 import { Link, useHistory, useParams } from "react-router-dom";
 import AddNewPost from "./components/AddNewPost";
-import { deletePost, fetchPosts } from "../api";
+import { deletePost, fetchPost, fetchPosts } from "../api";
 
 const Home = () => {
   const cache = useQueryClient();
@@ -25,7 +25,7 @@ const Home = () => {
   const pageId = parseInt(id);
 
   const toast = useToast();
-  const { data, isLoading } = useQuery(
+  const { data, isLoading, isSuccess } = useQuery(
     ["posts", pageId],
     () => fetchPosts(pageId),
     {
@@ -35,6 +35,16 @@ const Home = () => {
       },
     }
   );
+
+  const { data: singlePost } = useQuery(["post", 1315], () => fetchPost(1315), {
+    enabled: isSuccess,
+    onError: (error) => {
+      toast({ status: "error", title: error.message });
+    },
+  });
+
+  console.log("post", singlePost);
+  console.log("posts", data);
   const { isLoading: isMutating, mutateAsync } = useMutation(
     "deletePost",
     deletePost,

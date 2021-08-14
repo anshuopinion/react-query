@@ -1,5 +1,5 @@
 import { Heading, Stack, useToast } from "@chakra-ui/react";
-import axios from "axios";
+
 import { Form, Formik } from "formik";
 import { InputControl, SubmitButton, TextareaControl } from "formik-chakra-ui";
 import React from "react";
@@ -47,7 +47,7 @@ const AddNewPost = ({ isUpdate, id }) => {
       },
     }
   );
-  console.log(data);
+
   return (
     <div>
       <Formik

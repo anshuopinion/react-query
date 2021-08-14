@@ -11,7 +11,7 @@ const api = axios.create({
 export const addNewPost = async ({ title, body }) => {
   try {
     const { data } = await api.post(
-      `users/1442/posts`,
+      `users/1891/posts`,
       {
         title,
         body,
@@ -68,7 +68,7 @@ export const deletePost = async ({ id }) => {
 };
 export const fetchPosts = async (id) => {
   try {
-    const { data } = await api.get(`users/1442/posts?page=${id}`);
+    const { data } = await api.get(`users/1891/posts?page=${id}`);
 
     return data;
   } catch (error) {
